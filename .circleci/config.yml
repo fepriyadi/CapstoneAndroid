@@ -20,9 +20,6 @@ jobs:
             source "$HOME/.sdkman/bin/sdkman-init.sh"
             sdk install java 17.0.2-open
       - run:
-          name: Clean Gradle
-          command: ./gradlew clean
-      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
