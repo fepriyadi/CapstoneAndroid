@@ -21,8 +21,8 @@ jobs:
             sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
             java -version
       - run:
-	  name: Clean Gradle
-	  command: ./gradlew clean
+          name: Clean Gradle
+          command: ./gradlew clean
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
