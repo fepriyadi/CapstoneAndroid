@@ -22,7 +22,7 @@ jobs:
             java -version
       - run:
 	  name: Clean Gradle
-	  command: ./gradle clean
+	  command: ./gradlew clean
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
