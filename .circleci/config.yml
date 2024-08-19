@@ -14,10 +14,11 @@ jobs:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
       - run:
-          name: Install OpenJDK 17
+          name: Install JDK
           command: |
-            sudo apt-get update && sudo apt-get install openjdk-17-jdk
-            java -version
+            curl -s "https://get.sdkman.io" | bash
+            source "$HOME/.sdkman/bin/sdkman-init.sh"
+            sdk install java 17.0.2-open
       - run:
           name: Clean Gradle
           command: ./gradlew clean
