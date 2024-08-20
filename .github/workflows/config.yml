@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt-openjdk'
+          distribution: 'openjdk'
 
       - name: Set up Android SDK
         uses: actions/setup-java@v3
