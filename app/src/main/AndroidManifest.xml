@@ -25,8 +25,14 @@
         </activity>
 
         <activity
-            android:name="com.example.capstonemovie.detail.DetailActivity"
-            android:label="@string/title_activity_detail_home" />
+            android:name=".detail.DetailActivity"
+            android:exported="true"
+            android:label="@string/title_activity_detail_home">
+            <intent-filter>
+                <action android:name="com.example.capstonemovie.detail.DetailActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

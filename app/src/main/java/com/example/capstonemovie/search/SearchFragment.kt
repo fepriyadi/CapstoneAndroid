@@ -9,7 +9,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
-import com.example.capstoneMovie.databinding.FragmentSearchBinding
+import com.example.capstonemovie.databinding.FragmentSearchBinding
 import com.example.capstonemovie.detail.DetailActivity
 import com.example.core.data.Resource
 import com.example.core.ui.EpoxyCallbacks

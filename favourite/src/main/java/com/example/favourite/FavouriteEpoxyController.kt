@@ -22,7 +22,6 @@ class FavouriteEpoxyController(private val callbacks: EpoxyCallbacks,
 
 
     override fun buildModels(movieList: Resource<List<Movie>>) {
-        toString().log("MOVIELIST: ${movieList.data?.size}")
         run {
             buildFavouritesModel(movieList)
         }

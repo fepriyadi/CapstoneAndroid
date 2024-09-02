@@ -6,9 +6,9 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.example.capstoneMovie.R.id
-import com.example.capstoneMovie.R.layout.view_main_text
-import com.example.capstoneMovie.R.layout.view_movie_info_bar
+import com.example.capstonemovie.R.id
+import com.example.capstonemovie.R.layout.view_main_text
+import com.example.capstonemovie.R.layout.view_movie_info_bar
 import com.example.core.ui.KotlinEpoxyHolder
 
 @EpoxyModelClass

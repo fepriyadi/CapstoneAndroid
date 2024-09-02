@@ -13,8 +13,8 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.example.capstoneMovie.R
-import com.example.capstoneMovie.databinding.ActivityDetailBinding
+import com.example.capstonemovie.R
+import com.example.capstonemovie.databinding.ActivityDetailBinding
 import com.example.capstonemovie.MainViewModel
 import com.example.core.R.*
 import com.example.core.data.Resource

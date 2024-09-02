@@ -32,15 +32,18 @@ class MovieRepository(
             when (apiResponse) {
                 is ApiResponse.Success -> {
                     val data = apiResponse.data
+                    toString().log("getnowplaying success ${data.size}")
                     data.map {
                         emit(Resource.Success(DataMapper.mapResponseToModel(data)))
                     }
                 }
 
                 is ApiResponse.Empty -> {
+                    toString().log("getnowplaying empty")
                 }
 
                 is ApiResponse.Error -> {
+                    toString().log("getnowplaying error")
                     emit(
                         Resource.Error(apiResponse.errorMessage)
                     )

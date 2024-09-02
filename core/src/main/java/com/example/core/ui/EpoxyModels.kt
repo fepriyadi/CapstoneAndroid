@@ -1,19 +1,23 @@
 package com.example.core.ui
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.Nullable
 import androidx.core.view.ViewCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.core.R
 import org.koin.core.component.KoinComponent
+
 
 @EpoxyModelClass
 abstract class HeaderModel : EpoxyModelWithHolder<HeaderModel.HeaderViewHolder>() {
@@ -123,6 +127,7 @@ abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
             glide
                 .load(pictureUrl)
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .override(300, 300)
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.ic_round_account_circle_24px)
@@ -131,19 +136,24 @@ abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .circleCrop()
                 )
-                .into(actorPicture)
-            ViewCompat.setTransitionName(actorPicture, transitionName)
-        }
-    }
+                .into(object : CustomTarget<Drawable?>() {
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        transition: Transition<in Drawable?>?
+                    ) {
+                        // Set the drawable to the left of the text
+                        actorName.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null)
+                    }
 
-    override fun unbind(holder: ActorHolder) {
-        super.unbind(holder)
-        glide.clear(holder.actorPicture)
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Handle clearing if necessary
+                    }
+                })
+        }
     }
 
     inner class ActorHolder : KotlinEpoxyHolder(), KoinComponent {
         val actorName by bind<TextView>(R.id.tvCreditActorName)
-        val actorPicture by bind<ImageView>(R.id.ivCreditActorPhoto)
     }
 }
 

@@ -3,7 +3,7 @@ package com.example.capstonemovie.common
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import com.example.capstoneMovie.R
+import com.example.capstonemovie.R
 import com.google.android.material.button.MaterialButton
 
 class CustomMaterialButton @JvmOverloads constructor(

@@ -12,13 +12,6 @@ class TabAdapter(fragmentManager: FragmentManager?, private val pageCount: Int) 
     override fun getItem(position: Int): Fragment {
         val fragmentFav = Class.forName("com.example.favourite.FavouriteFragment").newInstance()
 
-//        if (fragment is Fragment) {
-//            fragmentManager
-//                ?.beginTransaction()
-//                ?.replace(R.id.fragmentHolder, fragment, "dynamic_fragment")
-//                ?.addToBackStack("dynamic_fragment")
-//                ?.commit()
-//        }
         when (position) {
             0 -> return HomeFragment()
             1 -> return SearchFragment()

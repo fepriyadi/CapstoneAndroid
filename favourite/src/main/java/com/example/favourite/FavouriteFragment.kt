@@ -9,7 +9,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
-import com.example.capstonemovie.detail.DetailActivity
 import com.example.core.data.Resource
 import com.example.core.ui.EpoxyCallbacks
 import com.example.core.ui.EqualSpaceGridItemDecoration
@@ -88,8 +87,8 @@ class FavouriteFragment : Fragment() {
 
     private val callbacks = object : EpoxyCallbacks {
         override fun onMovieItemClicked(id: Int) {
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_DATA, id)
+            val intent = Intent("com.example.capstonemovie.detail.DetailActivity")
+            intent.putExtra("extra_data", id)
             startActivity(intent)
         }
     }

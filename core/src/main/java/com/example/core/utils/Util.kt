@@ -1,14 +1,9 @@
 package com.example.core.utils
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import com.example.core.BuildConfig
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -69,4 +64,9 @@ fun String.log(msg: String) {
     if (BuildConfig.DEBUG) {
         Log.d(this::class.simpleName, "===================>  $msg $this")
     }
+}
+
+fun dpToPx(context: Context, dp: Int): Int {
+    val density: Float = context.resources.displayMetrics.density
+    return Math.round(dp * density)
 }

@@ -39,6 +39,7 @@ class HomeEpoxyController(private val callbacks: EpoxyCallbacks,
 
         when (nowPlayingMovies) {
             is Resource.Success -> {
+                toString().log("nowPlayingMovies ${nowPlayingMovies.data.toString()}")
                 nowPlayingMovies.data?.forEach { nowPlayingMovie ->
                     movie {
                         id(nowPlayingMovie.id)

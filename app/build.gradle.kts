@@ -8,21 +8,28 @@ plugins {
 }
 
 android {
-    namespace = "com.example.capstoneMovie"
+    namespace = "com.example.capstonemovie"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.capstoneMovie"
+        applicationId = "com.example.capstonemovie"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -60,17 +67,23 @@ dependencies {
     implementation(libs.epoxy.data.binding)
     implementation(libs.rxBinding)
     implementation(libs.rxRelay)
+//    implementation(libs.core.ktx)
+    implementation(libs.feature.delivery.ktx)
     ksp(libs.epoxy.processor)
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.jvm)
     implementation(libs.androidx.room)
     implementation(libs.room.ktx.android)
     implementation(libs.room.testing)
     implementation(libs.glide)
+    implementation(libs.multidex)
+    implementation(libs.multidex)
     ksp(libs.glide.compiler)
 
 //    ksp(libs.room.compiler)
     testImplementation(libs.junit)
+    debugImplementation(libs.leak.canary)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

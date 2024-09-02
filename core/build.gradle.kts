@@ -11,14 +11,21 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         buildConfigField("String", "API_KEY", "\"e3ea2cdc09b8b8695cedb54c0e54affd\"")
+        multiDexEnabled = true
     }
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -69,10 +76,14 @@ dependencies {
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.jvm)
 
     implementation(libs.epoxy)
     implementation(libs.epoxy.data.binding)
     ksp(libs.epoxy.processor)
+
+    implementation(libs.sql.lite)
+    implementation(libs.sql.chiper)
 
     api(libs.lifecycle.livedata)
     testImplementation(libs.junit)

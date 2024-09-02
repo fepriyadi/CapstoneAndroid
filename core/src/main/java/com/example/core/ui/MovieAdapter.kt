@@ -14,13 +14,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
     private var listData = ArrayList<Movie>()
     var onItemClick: ((Movie) -> Unit)? = null
 
-    fun setData(newListData: List<Movie>?) {
-        if (newListData == null) return
-        listData.clear()
-        listData.addAll(newListData)
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_moviegrid, parent, false))
 

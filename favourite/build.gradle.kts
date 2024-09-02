@@ -16,10 +16,6 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 
@@ -42,8 +38,8 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":app"))
     implementation(project(":core"))
+    implementation(project(":app"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

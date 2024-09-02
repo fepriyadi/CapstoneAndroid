@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.example.capstoneMovie.R
-import com.example.capstoneMovie.databinding.ActivityMainBinding
+import com.example.capstonemovie.R
+import com.example.capstonemovie.databinding.ActivityMainBinding
 import com.example.capstonemovie.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
