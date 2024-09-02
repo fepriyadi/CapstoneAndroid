@@ -86,40 +86,14 @@
 # Uncomment if you use RxJava
 #-dontwarn java.util.concurrent.Flow*
 
--dontwarn com.example.core.data.Resource$Error
--dontwarn com.example.core.data.Resource$Loading
--dontwarn com.example.core.data.Resource$Success
--dontwarn com.example.core.data.Resource
--dontwarn com.example.core.data.source.remote.response.Cast
--dontwarn com.example.core.data.source.remote.response.Credits
--dontwarn com.example.core.data.source.remote.response.Genre
--dontwarn com.example.core.data.source.remote.response.MovieDetailResponse
--dontwarn com.example.core.databinding.ViewEmptyBinding
--dontwarn com.example.core.databinding.ViewSearchboxBinding
+-dontwarn com.example.core.data.**
+-dontwarn com.example.core.data.source.remote.**
+-dontwarn com.example.core.data.source.local.**
+-dontwarn com.example.core.databinding.**
 -dontwarn com.example.core.di.CoreModuleKt
--dontwarn com.example.core.domain.model.Movie
--dontwarn com.example.core.domain.repository.IMovieRepository
--dontwarn com.example.core.domain.usecase.MovieInteractor
--dontwarn com.example.core.domain.usecase.MovieUseCase
--dontwarn com.example.core.ui.ActorModel_
--dontwarn com.example.core.ui.EpoxyCallbacks
--dontwarn com.example.core.ui.EqualSpaceGridItemDecoration
--dontwarn com.example.core.ui.HeaderModelBuilder
--dontwarn com.example.core.ui.HeaderModel_
--dontwarn com.example.core.ui.InfoTextModelBuilder
--dontwarn com.example.core.ui.InfoTextModel_
--dontwarn com.example.core.ui.KotlinEpoxyHolder
--dontwarn com.example.core.ui.LoadingModelBuilder
--dontwarn com.example.core.ui.LoadingModel_
--dontwarn com.example.core.ui.MovieModel$MovieViewHolder
--dontwarn com.example.core.ui.MovieModelBuilder
--dontwarn com.example.core.ui.MovieModel_
--dontwarn com.example.core.ui.MovieSearchResultModel$MovieSearchResultHolder
--dontwarn com.example.core.ui.MovieSearchResultModelBuilder
--dontwarn com.example.core.ui.MovieSearchResultModel_
--dontwarn com.example.core.utils.DataMapper
--dontwarn com.example.core.utils.SingleLiveEvent
--dontwarn com.example.core.utils.UtilKt
+-dontwarn com.example.core.domain.**
+-dontwarn com.example.core.ui.**
+-dontwarn com.example.core.utils.**
 
 -dontwarn org.bouncycastle.jsse.**
 -dontwarn org.conscrypt.*
@@ -164,12 +138,5 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-
-# Keep all classes in the core module, but allow obfuscation
--keep, allowobfuscation class com.example.core.di.CoreModuleKt { *; }
-
--keepclasseswithmembernames class com.example.core.di.CoreModuleKt { *;}
-
--keepnames,allowobfuscation interface com.example.core.ui.EpoxyCallbacks { *;}
 
 
