@@ -13,7 +13,6 @@
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars"
         android:gravity="center"
-        app:tint="#80000000"
         android:layout_gravity="center"/>
 
     <TextView

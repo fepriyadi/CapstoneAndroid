@@ -161,13 +161,13 @@ abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
 abstract class MovieSearchResultModel : EpoxyModelWithHolder<MovieSearchResultModel.MovieSearchResultHolder>() {
 
     @EpoxyAttribute
-    lateinit var posterUrl: String
+    var posterUrl: String = ""
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     lateinit var clickListener: View.OnClickListener
 
     @EpoxyAttribute
-    lateinit var transitionName: String
+    var transitionName: String = ""
 
     @EpoxyAttribute
     var movieId: Int? = null
@@ -184,19 +184,14 @@ abstract class MovieSearchResultModel : EpoxyModelWithHolder<MovieSearchResultMo
 
     override fun bind(holder: MovieSearchResultHolder) {
         super.bind(holder)
-        with(holder) {
-            ViewCompat.setTransitionName(poster, transitionName)
-            poster.setOnClickListener(clickListener)
-            title.text = movieTitle
-            glide.load(posterUrl)
+        ViewCompat.setTransitionName(holder.poster, transitionName)
+        holder.poster.setOnClickListener(clickListener)
+        holder.title.text = movieTitle
+        posterUrl.let {
+            glide.load(it)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.poster)
         }
-    }
-
-    override fun unbind(holder: MovieSearchResultHolder) {
-        super.unbind(holder)
-        glide.clear(holder.poster)
     }
 
     inner class MovieSearchResultHolder : KotlinEpoxyHolder(), KoinComponent {

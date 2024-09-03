@@ -11,6 +11,7 @@ import com.example.core.ui.infoText
 import com.example.core.ui.loading
 import com.example.core.ui.movie
 import com.example.core.ui.movieSearchResult
+import com.example.core.utils.log
 
 class SearchEpoxyController(private val callbacks: EpoxyCallbacks,
                             private val glide: RequestManager,

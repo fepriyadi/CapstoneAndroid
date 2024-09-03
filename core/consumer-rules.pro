@@ -98,6 +98,7 @@
 -dontwarn org.bouncycastle.jsse.**
 -dontwarn org.conscrypt.*
 -dontwarn org.openjsse.**
+-keep class com.example.core.** { *; }
 
 # Retrofit and OkHttp
 -keep class retrofit2.** { *; }
