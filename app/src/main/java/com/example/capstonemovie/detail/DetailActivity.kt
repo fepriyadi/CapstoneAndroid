@@ -7,16 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.example.capstonemovie.R
-import com.example.capstonemovie.databinding.ActivityDetailBinding
 import com.example.capstonemovie.MainViewModel
-import com.example.core.R.*
+import com.example.capstonemovie.databinding.ActivityDetailBinding
+import com.example.core.R.dimen
+import com.example.core.R.string
 import com.example.core.data.Resource
 import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.utils.format
@@ -78,9 +76,10 @@ class DetailActivity : AppCompatActivity() {
                             mainViewModel.updateToolbarTitle(movieDetail.data?.title.toString())
                             renderMovieHeader(movieDetail)
                             detailsEpoxyController.apply {
-                                setData(movieDetail.data?.credits?.cast?.map { cast ->
+                                val data = movieDetail.data?.credits?.cast?.map { cast ->
                                     Resource.Success(cast)
-                                }?.let { DetailScreenState(isFav, movieDetail, it) })
+                                }?.let { DetailScreenState(isFav, movieDetail, it) }
+                                setData(data)
                             }
                         }
 
@@ -143,14 +142,20 @@ class DetailActivity : AppCompatActivity() {
                     .load(movie?.backdropURl)
                     .into(binding.ivBackdrop)
 
-                binding.tvTitle.text = movie?.title
-                binding.chipMovieYear.text = movie?.releaseDate?.formatYear()
-                binding.chipMovieGenre.text = (movie?.genres?.first()?.name ?: "...").toString()
-                binding.chipMovieRating.text = movie?.voteAverage?.format("%.2f")
-
+                movie?.let {
+                    binding.tvTitle.text = it.title
+                    binding.chipMovieYear.text = it.releaseDate?.formatYear()
+                    binding.chipMovieGenre.text = it.genres.first().name
+                    binding.chipMovieRating.text = it.voteAverage.format("%.2f")
+                }
             }
             else -> Unit
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        detailsEpoxyController.cancelPendingModelBuild()
     }
 
 }

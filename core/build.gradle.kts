@@ -26,7 +26,7 @@ android {
             )
         }
         debug {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -85,7 +85,10 @@ dependencies {
     implementation(libs.sql.lite)
     implementation(libs.sql.chiper)
 
+    implementation(libs.multidex)
+
     api(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

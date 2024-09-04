@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.usecase.MovieUseCase
-import com.example.core.utils.log
+import com.example.core.utils.logError
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
@@ -43,7 +43,7 @@ class HomeViewModel(private val movieUseCase: MovieUseCase) : ViewModel() {
             }
         } catch (e: Exception) {
             // Handle exceptions
-            toString().log("Error collecting Flow $e")
+            e.toString().logError("HomeViewModel collect")
         }
 
     }

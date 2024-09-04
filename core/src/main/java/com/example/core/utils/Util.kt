@@ -66,6 +66,12 @@ fun String.log(msg: String) {
     }
 }
 
+fun String.logError(msg: String) {
+    if (BuildConfig.DEBUG) {
+        Log.e(this::class.simpleName, "===================>  $msg $this")
+    }
+}
+
 fun dpToPx(context: Context, dp: Int): Int {
     val density: Float = context.resources.displayMetrics.density
     return Math.round(dp * density)

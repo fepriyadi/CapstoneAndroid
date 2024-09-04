@@ -1,6 +1,3 @@
-import org.gradle.initialization.Environment
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     id("org.jetbrains.kotlin.android")
@@ -24,6 +21,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -31,6 +29,7 @@ android {
         }
         debug {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -76,10 +75,11 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.room.ktx.android)
     implementation(libs.room.testing)
+    ksp(libs.room.compiler)
     implementation(libs.glide)
     implementation(libs.multidex)
-    implementation(libs.multidex)
     ksp(libs.glide.compiler)
+    implementation(libs.lifecycle.viewmodel)
 
 //    ksp(libs.room.compiler)
     testImplementation(libs.junit)

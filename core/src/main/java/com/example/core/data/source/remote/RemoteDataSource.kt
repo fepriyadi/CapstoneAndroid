@@ -6,6 +6,7 @@ import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.network.ApiService
 import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.data.source.remote.response.MovieResponse
+import com.example.core.utils.logError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -25,6 +26,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 }
             } catch (e : Exception){
                 emit(ApiResponse.Error(e.toString()))
+                e.toString().logError("RemoteDataSource")
                 Log.e("RemoteDataSource", e.toString())
             }
         }.flowOn(Dispatchers.IO)

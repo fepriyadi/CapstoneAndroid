@@ -1,7 +1,6 @@
 package com.example.core.domain.model
 
 import android.os.Parcelable
-import com.example.core.utils.log
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -18,16 +17,11 @@ data class Movie(
     val isFavorite: Boolean?
 ) : Parcelable{
 
-    private val imageUrl = "https://image.tmdb.org/t/p/w500"
-
     val posterURl: String
-        get(){
-            toString().log("poster is null ${posterPath == null}")
-            return "$imageUrl$posterPath"
-        }
+        get(){return "https://image.tmdb.org/t/p/w500${posterPath}"}
 
     val backdropURl: String
-        get(){ return "$imageUrl$backdropPath" }
+        get(){return "https://image.tmdb.org/t/p/w500${backdropPath}"}
 
 }
 

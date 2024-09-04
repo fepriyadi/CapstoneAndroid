@@ -10,16 +10,17 @@ import com.example.core.ui.EpoxyCallbacks
 import com.example.core.ui.InfoTextModel_
 import com.example.core.ui.header
 import com.example.core.ui.movie
-import com.example.core.utils.log
+import java.lang.ref.WeakReference
 
 class FavouriteEpoxyController(private val callbacks: EpoxyCallbacks,
-                               private val glide: RequestManager,
+                               glide: RequestManager?,
                                epoxyHandler: Handler):
     TypedEpoxyController<Resource<List<Movie>>>(epoxyHandler, epoxyHandler) {
 
     @AutoModel
     lateinit var emptyListModelFavourited: InfoTextModel_
 
+    private val glideRef = WeakReference(glide)
 
     override fun buildModels(movieList: Resource<List<Movie>>) {
         run {
@@ -49,7 +50,7 @@ class FavouriteEpoxyController(private val callbacks: EpoxyCallbacks,
                         movie {
                             id(favouriteMovie.id)
                             movieId(favouriteMovie.id)
-                            glide(this@FavouriteEpoxyController.glide)
+                            this@FavouriteEpoxyController.glideRef.get()?.let { glide(it) }
                             posterUrl(favouriteMovie.posterURl)
                             transitionName("poster-${favouriteMovie.id}")
                             clickListener { model, _, _, _ ->

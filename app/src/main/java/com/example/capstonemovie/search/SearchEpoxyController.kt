@@ -9,15 +9,14 @@ import com.example.core.ui.EpoxyCallbacks
 import com.example.core.ui.header
 import com.example.core.ui.infoText
 import com.example.core.ui.loading
-import com.example.core.ui.movie
 import com.example.core.ui.movieSearchResult
-import com.example.core.utils.log
+import java.lang.ref.WeakReference
 
 class SearchEpoxyController(private val callbacks: EpoxyCallbacks,
-                            private val glide: RequestManager,
+                            glide: RequestManager?,
                             epoxyHandler: Handler) :
     TypedEpoxyController<Resource<List<Movie>>>(epoxyHandler, epoxyHandler) {
-
+    private val glideRef = WeakReference(glide)
 
     override fun buildModels(movies: Resource<List<Movie>>) {
         with(movies) {
@@ -51,7 +50,7 @@ class SearchEpoxyController(private val callbacks: EpoxyCallbacks,
                                     id(id)
                                     movieId(id)
                                     movieTitle(title.toString())
-                                    glide(this@SearchEpoxyController.glide)
+                                    this@SearchEpoxyController.glideRef.get()?.let { glide(it) }
                                     posterUrl(posterURl)
                                     transitionName("poster-$id")
                                     clickListener { model, _, _, _ ->

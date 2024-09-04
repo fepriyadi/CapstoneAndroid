@@ -10,18 +10,23 @@ import com.example.core.ui.header
 import com.example.core.ui.infoText
 import com.example.core.ui.loading
 import com.example.core.ui.movie
-import com.example.core.utils.log
+import java.lang.ref.WeakReference
 
-class HomeEpoxyController(private val callbacks: EpoxyCallbacks,
-                          private val glide: RequestManager,
-                          epoxyHandler: Handler) :
+class HomeEpoxyController(
+    private val callbacks: EpoxyCallbacks,
+    glide: RequestManager?,
+    epoxyHandler: Handler
+) :
     TypedEpoxyController<HomeScreenState>(epoxyHandler, epoxyHandler) {
-
-
+    private val glideRef = WeakReference(glide)
     override fun buildModels(state: HomeScreenState) {
         with(state) {
             run {
-                buildHomeModel(nowPlayingResultsResource, popularMoviesResource, topRatedMoviesResource)
+                buildHomeModel(
+                    nowPlayingResultsResource,
+                    popularMoviesResource,
+                    topRatedMoviesResource
+                )
             }
         }
     }
@@ -39,13 +44,12 @@ class HomeEpoxyController(private val callbacks: EpoxyCallbacks,
 
         when (nowPlayingMovies) {
             is Resource.Success -> {
-                toString().log("nowPlayingMovies ${nowPlayingMovies.data.toString()}")
                 nowPlayingMovies.data?.forEach { nowPlayingMovie ->
                     movie {
                         id(nowPlayingMovie.id)
                         movieId(nowPlayingMovie.id)
                         posterUrl(nowPlayingMovie.posterURl)
-                        glide(this@HomeEpoxyController.glide)
+                        this@HomeEpoxyController.glideRef.get()?.let { glide(it) }
                         transitionName("poster-${nowPlayingMovie.id}")
                         clickListener { model, _, _, _ ->
                             this@HomeEpoxyController.callbacks.onMovieItemClicked(
@@ -88,7 +92,7 @@ class HomeEpoxyController(private val callbacks: EpoxyCallbacks,
                         id(popularMovie.id)
                         movieId(popularMovie.id)
                         posterUrl(popularMovie.posterURl)
-                        glide(this@HomeEpoxyController.glide)
+                        this@HomeEpoxyController.glideRef.get()?.let { glide(it) }
                         transitionName("poster-${popularMovie.id}")
                         clickListener { model, _, _, _ ->
                             this@HomeEpoxyController.callbacks.onMovieItemClicked(
@@ -131,7 +135,7 @@ class HomeEpoxyController(private val callbacks: EpoxyCallbacks,
                         id(topratedMovie.id)
                         movieId(topratedMovie.id)
                         posterUrl(topratedMovie.posterURl)
-                        glide(this@HomeEpoxyController.glide)
+                        this@HomeEpoxyController.glideRef.get()?.let { glide(it) }
                         transitionName("poster-${topratedMovie.id}")
                         clickListener { model, _, _, _ ->
                             this@HomeEpoxyController.callbacks.onMovieItemClicked(

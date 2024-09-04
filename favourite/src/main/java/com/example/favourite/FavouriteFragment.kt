@@ -9,6 +9,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
+import com.example.capstonemovie.detail.DetailActivity
 import com.example.core.data.Resource
 import com.example.core.ui.EpoxyCallbacks
 import com.example.core.ui.EqualSpaceGridItemDecoration
@@ -20,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
 
 class FavouriteFragment : Fragment() {
@@ -29,11 +31,11 @@ class FavouriteFragment : Fragment() {
     private var _binding: FragmentFavouriteBinding? = null
     private val binding get() = _binding!!
 
-    private val glideRequestManager: RequestManager by inject(named("fragment-glide-request-manager")) {
-        parametersOf(this)
+    private val glideRequestManager: RequestManager by inject(named("activity-glide-request-manager")) {
+        parametersOf(activity)
     }
 
-    private val homeEpoxyController: FavouriteEpoxyController by inject {
+    private val favouriteEpoxyController: FavouriteEpoxyController by inject {
         parametersOf(callbacks, glideRequestManager)
     }
 
@@ -57,7 +59,7 @@ class FavouriteFragment : Fragment() {
                         is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            homeEpoxyController.setData(movie)
+                            favouriteEpoxyController.setData(movie)
                             binding.viewEmpty.root.visibility =
                                 if (movie.data?.isNotEmpty() == true)
                                     View.GONE
@@ -72,12 +74,12 @@ class FavouriteFragment : Fragment() {
                 }
             }
 
-            binding.rvHome.apply {
+            binding.rvFav.apply {
                 val columns = resources.getDimension(com.example.core.R.dimen.movie_grid_poster_width).getNumberOfColumns(context)
                 val space = resources.getDimension(com.example.core.R.dimen.movie_grid_item_space)
                 layoutManager = GridLayoutManager(context, columns)
                 addItemDecoration(EqualSpaceGridItemDecoration(space.roundToInt()))
-                setController(homeEpoxyController)
+                setController(favouriteEpoxyController)
             }
             (view.parent as ViewGroup).doOnPreDraw {
                 startPostponedEnterTransition()
@@ -85,16 +87,24 @@ class FavouriteFragment : Fragment() {
         }
     }
 
-    private val callbacks = object : EpoxyCallbacks {
-        override fun onMovieItemClicked(id: Int) {
-            val intent = Intent("com.example.capstonemovie.detail.DetailActivity")
-            intent.putExtra("extra_data", id)
-            startActivity(intent)
-        }
-    }
+    private var callbacks = WeakReferenceEpoxyCallbacks(this)
 
     override fun onDestroyView() {
         super.onDestroyView()
+        favouriteEpoxyController.cancelPendingModelBuild()
+        binding.rvFav.adapter = null
         _binding = null
+    }
+}
+
+private class WeakReferenceEpoxyCallbacks(fragment: FavouriteFragment) : EpoxyCallbacks {
+    private val fragmentRef = WeakReference(fragment)
+
+    override fun onMovieItemClicked(id: Int) {
+        fragmentRef.get()?.let { fragment ->
+            val intent = Intent(fragment.activity, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_DATA, id)
+            fragment.startActivity(intent)
+        }
     }
 }

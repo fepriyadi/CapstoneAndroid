@@ -3,7 +3,7 @@
 -keep,includedescriptorclasses interface net.sqlcipher.** { *; }
 
 
-##---------------Begin: proguard configuration for Gson  ----------
+##---------------Begin: proguard configuration for Gson ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
@@ -13,7 +13,7 @@
 
 # Gson specific classes
 -dontwarn sun.misc.**
-#-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.stream.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { <fields>; }
@@ -27,11 +27,10 @@
 
 # Prevent R8 from leaving Data object members always null
 -keepclassmembers,allowobfuscation class * {
-  @com.google.gson.annotations.SerializedName <fields>;
+@com.google.gson.annotations.SerializedName <fields>;
 }
 
-
-##---------------Begin: proguard configuration for Retrofit  ----------
+##---------------Begin: proguard configuration for Retrofit ----------
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
 -keepattributes Signature, InnerClasses, EnclosingMethod
@@ -41,7 +40,7 @@
 
 # Retain service method parameters when optimizing.
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
-    @retrofit2.http.* <methods>;
+@retrofit2.http.* <methods>;
 }
 
 # Ignore annotation used for build tooling.
@@ -57,6 +56,10 @@
 -dontwarn retrofit2.KotlinExtensions
 -dontwarn retrofit2.KotlinExtensions$*
 
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
+
 # With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
 -if interface * { @retrofit2.http.* <methods>; }
@@ -64,28 +67,16 @@
 
 -dontwarn kotlinx.**
 
+# Keep generic signature of Call, Response (R8 full mode strips signatures from non-kept items).
+ -keep,allowobfuscation,allowshrinking interface retrofit2.Call
+ -keep,allowobfuscation,allowshrinking class retrofit2.Response
 
-##---------------Begin: proguard configuration for Glide  ----------
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep class * extends com.bumptech.glide.module.AppGlideModule {
- <init>(...);
-}
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
--keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
-  *** rewind();
-}
+ # With R8 full mode generic signatures are stripped for classes that are not
+ # kept. Suspend functions are wrapped in continuations where the type argument
+ # is used.
+ -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
-# Uncomment for DexGuard only
-#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
-
-
-##---------------Begin: proguard configuration for RxJava  ----------
-# Uncomment if you use RxJava
-#-dontwarn java.util.concurrent.Flow*
-
+#
 -dontwarn com.example.core.data.**
 -dontwarn com.example.core.data.source.remote.**
 -dontwarn com.example.core.data.source.local.**
@@ -98,46 +89,8 @@
 -dontwarn org.bouncycastle.jsse.**
 -dontwarn org.conscrypt.*
 -dontwarn org.openjsse.**
--keep class com.example.core.** { *; }
+-dontwarn com.example.core.**
 
-# Retrofit and OkHttp
--keep class retrofit2.** { *; }
--keep class retrofit2.adapter.** { *; }
--keep class retrofit2.converter.** { *; }
--keep class okhttp3.** { *; }
--keep class okio.** { *; }
 
-# Keep Kotlin classes and metadata
--keep class kotlin.** { *; }
--keepclassmembers class kotlin.Metadata { *; }
-
--keep class * extends com.airbnb.epoxy.EpoxyController { *; }
--keep class * extends com.airbnb.epoxy.ControllerHelper { *; }
--keepclasseswithmembernames class * { @com.airbnb.epoxy.AutoModel <fields>; }
-
-# Keep all Koin core classes
--keep class org.koin.** { *; }
-
-# Keep classes annotated with @Module and @Provides
--keep @org.koin.core.annotation.* class * { *; }
-
-# Keep specific Koin methods used for injection
--keepclassmembers class * {
-    public <init>(...);
-    public void inject(...);
-    public kotlin.Lazy inject(...);
-#    public kotlin.Lazy org.koin.core.component.KoinComponent.get(...);
-}
-
-# Keep classes that are injected by Koin
--keepclassmembers class * {
-    @org.koin.core.annotation.* *;
-}
-
-# Keep all enum classes
--keep class * extends java.lang.Enum {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
 
 

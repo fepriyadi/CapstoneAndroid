@@ -1,7 +1,6 @@
 package com.example.capstonemovie
 
 import android.app.Application
-import androidx.multidex.MultiDexApplication
 import com.example.capstonemovie.di.uiModule
 import com.example.capstonemovie.di.useCaseModule
 import com.example.capstonemovie.di.viewModelModule
@@ -19,9 +18,8 @@ import org.koin.core.logger.Level
 class MovieApp : Application() {
     override fun onCreate() {
         super.onCreate()
-//        installFavModule()
         startKoin {
-            androidLogger(Level.NONE)
+            androidLogger(Level.ERROR)
             androidContext(this@MovieApp)
             modules(
                 listOf(
@@ -33,24 +31,6 @@ class MovieApp : Application() {
                     uiModule
                 )
             )
-        }
-    }
-    private fun installFavModule() {
-        val splitInstallManager = SplitInstallManagerFactory.create(this)
-        val moduleFav = "favourite"
-        if (splitInstallManager.installedModules.contains(moduleFav)) {
-            toString().log("contains module fav")
-        } else {
-            val request = SplitInstallRequest.newBuilder()
-                .addModule(moduleFav)
-                .build()
-            splitInstallManager.startInstall(request)
-                .addOnSuccessListener {
-                    toString().log("succes installed module fav")
-                }
-                .addOnFailureListener {
-                    toString().log("failed installed module fav")
-                }
         }
     }
 }

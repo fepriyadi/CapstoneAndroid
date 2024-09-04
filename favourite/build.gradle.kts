@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.androidx.room)
+    ksp(libs.room.compiler)
     implementation(libs.room.ktx.android)
     implementation(libs.room.testing)
     implementation(libs.glide)

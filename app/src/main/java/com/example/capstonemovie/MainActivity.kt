@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.example.capstonemovie.R
 import com.example.capstonemovie.databinding.ActivityMainBinding
-import com.example.capstonemovie.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,9 +66,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-//                selectedTab = position
-//                fragmentCommunicators.get(position).fragmentOnStart()
-//                fragmentCommunicators.get(tabPosition).fragmentOnStop()
                 binding.navigationView.menu.getItem(position).setChecked(true)
             }
 

@@ -1,12 +1,9 @@
 package com.example.core.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.core.data.source.local.entity.MovieEntity
 import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.data.source.remote.response.MovieResponse
 import com.example.core.domain.model.Movie
-import kotlin.math.abs
 
 object DataMapper {
     fun mapResponseToEntity(input: MovieDetailResponse): MovieEntity{
@@ -25,6 +22,7 @@ object DataMapper {
 
     fun mapResponseToModel(input: List<MovieResponse>): List<Movie> {
         val movieList = ArrayList<Movie>()
+        toString().log("mapresponse ${movieList.size}")
         input.map {
             val movie = Movie(
                 id = it.id,

@@ -11,6 +11,7 @@ import com.example.core.domain.repository.IMovieRepository
 import com.example.core.utils.AppExecutors
 import com.example.core.utils.DataMapper
 import com.example.core.utils.log
+import com.example.core.utils.logError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -32,7 +33,6 @@ class MovieRepository(
             when (apiResponse) {
                 is ApiResponse.Success -> {
                     val data = apiResponse.data
-                    toString().log("getnowplaying success ${data.size}")
                     data.map {
                         emit(Resource.Success(DataMapper.mapResponseToModel(data)))
                     }
@@ -43,7 +43,7 @@ class MovieRepository(
                 }
 
                 is ApiResponse.Error -> {
-                    toString().log("getnowplaying error")
+                    apiResponse.errorMessage.logError("MovieRepository")
                     emit(
                         Resource.Error(apiResponse.errorMessage)
                     )

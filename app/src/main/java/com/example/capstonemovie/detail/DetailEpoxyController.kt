@@ -11,16 +11,17 @@ import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.ui.ActorModel_
 import com.example.core.ui.header
 import com.example.core.ui.loading
+import java.lang.ref.WeakReference
 
 class DetailEpoxyController(private val callbacks: MovieDetailsCallbacks,
-                            private val glide: RequestManager,
+                            private var glide: RequestManager?,
                             epoxyHandler: Handler):
     TypedEpoxyController<DetailScreenState>(epoxyHandler, epoxyHandler) {
 
     interface MovieDetailsCallbacks {
         fun toggleMovieFavouriteStatus(newState: Boolean)
     }
-
+    private val glideRef = WeakReference(glide)
     override fun buildModels(state: DetailScreenState) {
         with(state){
             run {
@@ -94,7 +95,7 @@ class DetailEpoxyController(private val callbacks: MovieDetailsCallbacks,
                 .id(actorResource.data?.id)
                 .actorId(actorResource.data?.id)
                 .name(actorResource.data?.name.toString())
-                .glide(this@DetailEpoxyController.glide)
+                .glide(this@DetailEpoxyController.glideRef.get()!!)
                 .pictureUrl(actorResource.data?.profileURl.toString())
                 .transitionName("actor-${actorResource.data?.id}")
         }

@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.Nullable
 import androidx.core.view.ViewCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -17,6 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.core.R
 import org.koin.core.component.KoinComponent
+import java.lang.ref.WeakReference
 
 
 @EpoxyModelClass
@@ -66,11 +66,17 @@ abstract class MovieModel : EpoxyModelWithHolder<MovieModel.MovieViewHolder>() {
 
     override fun bind(holder: MovieViewHolder) {
         super.bind(holder)
-        glide.load(posterUrl)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.poster)
+        val glideRef = WeakReference(glide)
+        glideRef.get()?.load(posterUrl)?.transition(DrawableTransitionOptions.withCrossFade())?.into(holder.poster)
         ViewCompat.setTransitionName(holder.poster, transitionName)
         holder.poster.setOnClickListener(clickListener)
+    }
+
+
+    override fun unbind(holder: MovieViewHolder) {
+        super.unbind(holder)
+        glide.clear(holder.poster)
+        clickListener = null
     }
 
     inner class MovieViewHolder : KotlinEpoxyHolder(), KoinComponent {
@@ -122,33 +128,31 @@ abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
 
     override fun bind(holder: ActorHolder) {
         super.bind(holder)
+        val glideRef = WeakReference(glide)
         with(holder) {
             actorName.text = name
-            glide
-                .load(pictureUrl)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .override(300, 300)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.ic_round_account_circle_24px)
-                        .error(R.drawable.ic_round_account_circle_24px)
-                        .fallback(R.drawable.ic_round_account_circle_24px)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .circleCrop()
-                )
-                .into(object : CustomTarget<Drawable?>() {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable?>?
-                    ) {
-                        // Set the drawable to the left of the text
-                        actorName.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null)
-                    }
+            glideRef.get()
+                ?.load(pictureUrl)?.transition(DrawableTransitionOptions.withCrossFade())
+                ?.override(300, 300)?.apply(
+                RequestOptions()
+                    .placeholder(R.drawable.ic_round_account_circle_24px)
+                    .error(R.drawable.ic_round_account_circle_24px)
+                    .fallback(R.drawable.ic_round_account_circle_24px)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .circleCrop()
+            )?.into(object : CustomTarget<Drawable?>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable?>?
+                ) {
+                    // Set the drawable to the left of the text
+                    actorName.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null)
+                }
 
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // Handle clearing if necessary
-                    }
-                })
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // Handle clearing if necessary
+                }
+            })
         }
     }
 
@@ -184,14 +188,20 @@ abstract class MovieSearchResultModel : EpoxyModelWithHolder<MovieSearchResultMo
 
     override fun bind(holder: MovieSearchResultHolder) {
         super.bind(holder)
+        val glideRef = WeakReference(glide)
         ViewCompat.setTransitionName(holder.poster, transitionName)
         holder.poster.setOnClickListener(clickListener)
         holder.title.text = movieTitle
         posterUrl.let {
-            glide.load(it)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.poster)
+            glideRef.get()?.load(it)
+                ?.transition(DrawableTransitionOptions.withCrossFade())
+                ?.into(holder.poster)
         }
+    }
+
+    override fun unbind(holder: MovieSearchResultHolder) {
+        super.unbind(holder)
+        glide.clear(holder.poster)
     }
 
     inner class MovieSearchResultHolder : KotlinEpoxyHolder(), KoinComponent {

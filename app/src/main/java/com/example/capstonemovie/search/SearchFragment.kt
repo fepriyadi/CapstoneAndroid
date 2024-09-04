@@ -30,8 +30,8 @@ class SearchFragment: Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private val glideRequestManager: RequestManager by inject(named("fragment-glide-request-manager")) {
-        parametersOf(this)
+    private val glideRequestManager: RequestManager by inject(named("activity-glide-request-manager")) {
+        parametersOf(activity)
     }
 
     private val searchEpoxyController: SearchEpoxyController by inject {
@@ -83,6 +83,7 @@ class SearchFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         onDestroyView.accept(Unit)
+        searchEpoxyController.cancelPendingModelBuild()
     }
 
     private val callbacks = object : EpoxyCallbacks {
