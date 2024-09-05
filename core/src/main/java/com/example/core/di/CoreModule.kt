@@ -66,7 +66,6 @@ val repositoryModule = module {
     single<IMovieRepository> {
         MovieRepository(
             get(),
-            get(),
             get()
         )
     }
