@@ -7,8 +7,8 @@ import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.data.source.remote.response.MovieResponse
 import com.example.core.domain.model.Movie
+import com.example.core.domain.model.MovieDetail
 import com.example.core.domain.repository.IMovieRepository
-import com.example.core.utils.AppExecutors
 import com.example.core.utils.DataMapper
 import com.example.core.utils.log
 import com.example.core.utils.logError
@@ -22,8 +22,7 @@ import kotlinx.coroutines.withContext
 
 class MovieRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val localDataSource: LocalDataSource
 ) : IMovieRepository {
 
     override fun getNowPlayingMovies(): Flow<Resource<List<Movie>>> {
@@ -130,7 +129,7 @@ class MovieRepository(
         }
     }
 
-    override fun getMovieDetail(id: Int): Flow<Resource<MovieDetailResponse>> {
+    override fun getMovieDetail(id: Int): Flow<Resource<MovieDetail>> {
         return flow {
             emit(Resource.Loading())
             var isFavoriteMovie: Boolean
@@ -141,11 +140,12 @@ class MovieRepository(
                 remoteDataSource.getMovieDetail(id).first()
             when (apiResponse) {
                 is ApiResponse.Success -> {
-                    val data = apiResponse.data
+                    val movieDetail = DataMapper.mapResponseToModel(apiResponse.data)
+
                     isFavoriteMovie.let {
-                        data.isFavoriteMovie = it
+                        movieDetail.isFavoriteMovie = it
                     }
-                    emit(Resource.Success(data))
+                    emit(Resource.Success(movieDetail))
                 }
 
                 is ApiResponse.Empty -> {
@@ -162,7 +162,7 @@ class MovieRepository(
 
 
     override fun setFavoriteMovie(movie: MovieEntity, state: Boolean): Boolean {
-        var result = false
+        var result: Boolean
 
         // Create a new coroutine scope and launch a coroutine
         runBlocking {

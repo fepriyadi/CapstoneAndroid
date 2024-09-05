@@ -16,8 +16,7 @@ import com.example.capstonemovie.databinding.ActivityDetailBinding
 import com.example.core.R.dimen
 import com.example.core.R.string
 import com.example.core.data.Resource
-import com.example.core.data.source.remote.response.MovieDetailResponse
-import com.example.core.utils.format
+import com.example.core.domain.model.MovieDetail
 import com.example.core.utils.formatYear
 import com.example.core.utils.getNumberOfColumns
 import com.example.core.utils.log
@@ -106,7 +105,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun renderMovieHeader(movieResource: Resource<MovieDetailResponse>){
+    private fun renderMovieHeader(movieResource: Resource<MovieDetail>){
         when (movieResource) {
             is Resource.Success -> {
                 val movie = movieResource.data
@@ -144,9 +143,9 @@ class DetailActivity : AppCompatActivity() {
 
                 movie?.let {
                     binding.tvTitle.text = it.title
-                    binding.chipMovieYear.text = it.releaseDate?.formatYear()
-                    binding.chipMovieGenre.text = it.genres.first().name
-                    binding.chipMovieRating.text = it.voteAverage.format("%.2f")
+                    binding.chipMovieYear.text = it.releaseDate.formatYear()
+                    binding.chipMovieGenre.text = it.genreName
+                    binding.chipMovieRating.text = it.rating.toString()
                 }
             }
             else -> Unit

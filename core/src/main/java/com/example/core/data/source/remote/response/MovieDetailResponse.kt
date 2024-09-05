@@ -71,17 +71,7 @@ data class MovieDetailResponse(
 
     @SerializedName("credits")
     val credits: Credits?,
-){
-
-    val posterURl: String
-        get(){return "https://image.tmdb.org/t/p/w500${posterPath}"}
-
-    val backdropURl: String
-        get(){return "https://image.tmdb.org/t/p/w500${backdropPath}"}
-
-    var isFavoriteMovie: Boolean = false
-
-}
+)
 
 
 data class Collection(
@@ -169,10 +159,7 @@ data class Cast(
 
     @SerializedName("profile_path")
     val profilePath: String?
-){
-    val profileURl: String
-        get(){return "https://image.tmdb.org/t/p/w500${profilePath}"}
-}
+)
 
 data class Crew(
     @SerializedName("credit_id")

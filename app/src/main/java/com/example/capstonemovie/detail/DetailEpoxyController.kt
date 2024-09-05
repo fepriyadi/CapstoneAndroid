@@ -6,15 +6,15 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.TypedEpoxyController
 import com.bumptech.glide.RequestManager
 import com.example.core.data.Resource
-import com.example.core.data.source.remote.response.Cast
-import com.example.core.data.source.remote.response.MovieDetailResponse
+import com.example.core.domain.model.CastDomain
+import com.example.core.domain.model.MovieDetail
 import com.example.core.ui.ActorModel_
 import com.example.core.ui.header
 import com.example.core.ui.loading
 import java.lang.ref.WeakReference
 
 class DetailEpoxyController(private val callbacks: MovieDetailsCallbacks,
-                            private var glide: RequestManager?,
+                            glide: RequestManager?,
                             epoxyHandler: Handler):
     TypedEpoxyController<DetailScreenState>(epoxyHandler, epoxyHandler) {
 
@@ -44,7 +44,7 @@ class DetailEpoxyController(private val callbacks: MovieDetailsCallbacks,
     }
 
 
-    private fun buildMovieResource(resource: Resource<MovieDetailResponse>) {
+    private fun buildMovieResource(resource: Resource<MovieDetail>) {
         when (resource) {
             is Resource.Success -> {
                 val movie = resource.data
@@ -89,20 +89,20 @@ class DetailEpoxyController(private val callbacks: MovieDetailsCallbacks,
         }
     }
 
-    private fun createCarouselModels(items: List<Resource<Cast>>): List<EpoxyModel<*>> {
+    private fun createCarouselModels(items: List<Resource<CastDomain>>): List<EpoxyModel<*>> {
         return items.map { actorResource ->
             ActorModel_()
                 .id(actorResource.data?.id)
                 .actorId(actorResource.data?.id)
                 .name(actorResource.data?.name.toString())
                 .glide(this@DetailEpoxyController.glideRef.get()!!)
-                .pictureUrl(actorResource.data?.profileURl.toString())
+                .pictureUrl(actorResource.data?.profileUrl.toString())
                 .transitionName("actor-${actorResource.data?.id}")
         }
     }
 
-    private fun buildCastResource(actors: List<Resource<Cast>>) {
-        actors.filterIsInstance<Resource.Success<Cast>>()
+    private fun buildCastResource(actors: List<Resource<CastDomain>>) {
+        actors.filterIsInstance<Resource.Success<CastDomain>>()
             .takeIf { it.isNotEmpty() }
             ?.let { actorList ->
                 val models = createCarouselModels(actorList)

@@ -2,8 +2,8 @@ package com.example.core.domain.usecase
 
 import com.example.core.data.Resource
 import com.example.core.data.source.local.entity.MovieEntity
-import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.domain.model.Movie
+import com.example.core.domain.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
@@ -13,5 +13,5 @@ interface MovieUseCase {
     fun getFavoriteMovie(): Flow<Resource<List<Movie>>>
     fun searchMovie(query: String): Flow<Resource<List<Movie>>>
     fun setFavoriteMovie(tourism: MovieEntity, state: Boolean): Boolean
-    fun getMovieDetail(id: Int): Flow<Resource<MovieDetailResponse>>
+    fun getMovieDetail(id: Int): Flow<Resource<MovieDetail>>
 }

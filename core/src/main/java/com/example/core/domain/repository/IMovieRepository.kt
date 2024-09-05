@@ -2,8 +2,8 @@ package com.example.core.domain.repository
 
 import com.example.core.data.Resource
 import com.example.core.data.source.local.entity.MovieEntity
-import com.example.core.data.source.remote.response.MovieDetailResponse
 import com.example.core.domain.model.Movie
+import com.example.core.domain.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
@@ -17,7 +17,7 @@ interface IMovieRepository {
 
     fun setFavoriteMovie(movie: MovieEntity, state: Boolean): Boolean
 
-    fun getMovieDetail(id: Int): Flow<Resource<MovieDetailResponse>>
+    fun getMovieDetail(id: Int): Flow<Resource<MovieDetail>>
 
     fun searchMovie(query: String): Flow<Resource<List<Movie>>>
 }
