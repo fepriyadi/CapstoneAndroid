@@ -10,7 +10,7 @@ data class MovieDetail(
     val overview: String,
     val releaseDate: String,
     val runtime: Int?,
-    val rating: Double,
+    val rating: String,
     val posterPath: String?,
     val backdropPath: String?,
     val videos: List<VideoDomain>,

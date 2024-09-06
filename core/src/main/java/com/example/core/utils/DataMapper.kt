@@ -26,7 +26,7 @@ object DataMapper {
             overview = input.overview,
             year = input.releaseDate,
             duration = input.runtime?.toFormattedRuntime().toString(),
-            rating = input.rating.toString(),
+            rating = input.rating,
             genre = input.genreName,
             isFavorite = input.isFavoriteMovie)
     }
@@ -38,7 +38,7 @@ object DataMapper {
             overview = input.overview ?: "",
             releaseDate = input.releaseDate ?: "",
             runtime = input.runtime,
-            rating = input.voteAverage.format("%.2f").toDouble(),
+            rating = input.voteAverage.format("%.2f"),
             posterPath = input.posterPath,
             backdropPath = input.backdropPath,
             videos = input.videos?.results?.map { it.toDomain() } ?: emptyList(),

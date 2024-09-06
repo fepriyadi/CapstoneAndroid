@@ -145,7 +145,7 @@ class DetailActivity : AppCompatActivity() {
                     binding.tvTitle.text = it.title
                     binding.chipMovieYear.text = it.releaseDate.formatYear()
                     binding.chipMovieGenre.text = it.genreName
-                    binding.chipMovieRating.text = it.rating.toString()
+                    binding.chipMovieRating.text = it.rating
                 }
             }
             else -> Unit
