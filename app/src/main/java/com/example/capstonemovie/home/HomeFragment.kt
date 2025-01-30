@@ -5,36 +5,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.RequestManager
+import androidx.recyclerview.widget.ConcatAdapter
 import com.example.capstonemovie.databinding.FragmentHomeBinding
 import com.example.capstonemovie.detail.DetailActivity
-import com.example.core.ui.EpoxyCallbacks
-import com.example.core.ui.EqualSpaceGridItemDecoration
-import com.example.core.utils.getNumberOfColumns
-import org.koin.android.ext.android.inject
+import com.example.capstonemovie.home.adapter.MovieCategoryAdapter
+import com.example.core.domain.model.MovieCat
+import com.jakewharton.rxrelay2.PublishRelay
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
-import java.lang.ref.WeakReference
-import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModel()
-
+    private var rowListAdapter: MovieCategoryAdapter? = null
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val glideRequestManager: RequestManager by inject(named("activity-glide-request-manager")) {
-        parametersOf(activity)
-    }
+    private val onDestroyView: PublishRelay<Unit> = PublishRelay.create()
 
-    private val homeEpoxyController: HomeEpoxyController by inject {
-        parametersOf(callbacks, glideRequestManager)
-    }
+    private val rowListListener: MovieCategoryAdapter.OnItemInteractionListener =
+        object : MovieCategoryAdapter.OnItemInteractionListener {
+            override fun onRowItemClick(id: Int) {
+                val intent = Intent(requireActivity(), DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_DATA, id)
+                startActivity(intent)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,43 +43,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (activity != null) {
-            homeViewModel.state.observe(viewLifecycleOwner) { state ->
-                homeEpoxyController.setData(state)
+        binding.run {
+            recyclerViewMovies.run {
+                itemAnimator = null
+                rowListAdapter = MovieCategoryAdapter(rowListListener)
+                adapter = ConcatAdapter(rowListAdapter)
             }
         }
 
-        binding.rvHome.apply {
-            val columns = resources.getDimension(com.example.core.R.dimen.movie_grid_poster_width)
-                .getNumberOfColumns(context)
-            val space = resources.getDimension(com.example.core.R.dimen.movie_grid_item_space)
-            layoutManager = GridLayoutManager(context, columns)
-            addItemDecoration(EqualSpaceGridItemDecoration(space.roundToInt()))
-            setController(homeEpoxyController)
-        }
-        (view.parent as ViewGroup).doOnPreDraw {
-            startPostponedEnterTransition()
+        homeViewModel.homeScreenState.observe(viewLifecycleOwner) { state ->
+            val categories = mutableListOf<MovieCat>()
+
+            state.popularMoviesResource?.data?.let { movies ->
+                categories.add(MovieCat("Popular Movies", movies))
+            }
+
+            state.topRatedMoviesResource?.data?.let { movies ->
+                categories.add(MovieCat("Top Rated Movies", movies))
+            }
+
+            state.nowPlayingResultsResource?.data?.let { movies ->
+                categories.add(MovieCat("Now Playing", movies))
+            }
+
+            rowListAdapter?.submitList(categories)
         }
     }
-
-    private var callbacks = WeakReferenceEpoxyCallbacks(this)
 
     override fun onDestroyView() {
         super.onDestroyView()
-        homeEpoxyController.cancelPendingModelBuild()
-        binding.rvHome.adapter = null
+        onDestroyView.accept(Unit)
         _binding = null
-    }
-}
-
-private class WeakReferenceEpoxyCallbacks(fragment: HomeFragment) : EpoxyCallbacks {
-    private val fragmentRef = WeakReference(fragment)
-
-    override fun onMovieItemClicked(id: Int) {
-        fragmentRef.get()?.let { fragment ->
-            val intent = Intent(fragment.activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_DATA, id)
-            fragment.startActivity(intent)
-        }
     }
 }

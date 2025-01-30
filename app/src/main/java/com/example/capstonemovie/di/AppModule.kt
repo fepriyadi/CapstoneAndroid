@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.example.capstonemovie.MainViewModel
-import com.example.capstonemovie.detail.DetailViewModel
 import com.example.capstonemovie.detail.DetailEpoxyController
-import com.example.capstonemovie.home.HomeEpoxyController
+import com.example.capstonemovie.detail.DetailViewModel
 import com.example.capstonemovie.home.HomeViewModel
 import com.example.capstonemovie.search.SearchEpoxyController
 import com.example.capstonemovie.search.SearchViewModel
@@ -48,10 +47,6 @@ val uiModule = module {
 
     factory { (callbacks: EpoxyCallbacks, glide: RequestManager) ->
         SearchEpoxyController(callbacks, glide, get(named("epoxy-handler")))
-    }
-
-    factory { (callbacks: EpoxyCallbacks, glide: RequestManager) ->
-        HomeEpoxyController(callbacks, glide, get(named("epoxy-handler")))
     }
 
     factory { (callbacks: DetailEpoxyController.MovieDetailsCallbacks, glide: RequestManager) ->

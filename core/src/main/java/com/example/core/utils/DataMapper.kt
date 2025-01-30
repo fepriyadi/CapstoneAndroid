@@ -49,7 +49,6 @@ object DataMapper {
 
     fun mapResponseToModel(input: List<MovieResponse>): List<Movie> {
         val movieList = ArrayList<Movie>()
-        toString().log("mapresponse ${movieList.size}")
         input.map {
             val movie = Movie(
                 id = it.id,

@@ -60,11 +60,6 @@ class FavouriteFragment : Fragment() {
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             favouriteEpoxyController.setData(movie)
-                            binding.viewEmpty.root.visibility =
-                                if (movie.data?.isNotEmpty() == true)
-                                    View.GONE
-                                else
-                                    View.VISIBLE
                         }
 
                         is Resource.Error -> {

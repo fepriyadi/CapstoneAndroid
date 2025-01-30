@@ -65,6 +65,10 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.room.ktx.android)
     implementation(libs.room.testing)
+    implementation(libs.rxJava)
+    implementation(libs.rxKotlin)
+    implementation(libs.rxBinding)
+
     ksp(libs.room.compiler)
 
     implementation(libs.androidx.navigation.fragment.ktx)
