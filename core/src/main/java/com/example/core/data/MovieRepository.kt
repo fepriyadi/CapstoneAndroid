@@ -1,7 +1,6 @@
 package com.example.core.data
 
 import com.example.core.data.source.local.LocalDataSource
-import com.example.core.data.source.local.entity.MovieEntity
 import com.example.core.data.source.remote.RemoteDataSource
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.response.MovieDetailResponse
@@ -161,7 +160,7 @@ class MovieRepository(
     }
 
 
-    override fun setFavoriteMovie(movie: MovieEntity, state: Boolean): Boolean {
+    override fun setFavoriteMovie(movie: MovieDetail, state: Boolean): Boolean {
         var result: Boolean
 
         // Create a new coroutine scope and launch a coroutine
