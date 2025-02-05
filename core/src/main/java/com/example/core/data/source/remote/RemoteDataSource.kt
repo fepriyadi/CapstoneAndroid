@@ -1,6 +1,7 @@
 package com.example.core.data.source.remote
 
 import android.util.Log
+import com.example.core.BuildConfig.API_KEY
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.network.ApiService
 import com.example.core.data.source.remote.response.MovieDetailResponse
