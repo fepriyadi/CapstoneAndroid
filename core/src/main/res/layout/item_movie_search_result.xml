@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/ivPosterSearchResult"
         android:layout_width="match_parent"
         android:layout_height="@dimen/movie_grid_poster_height"
+        android:contentDescription="@string/movie_poster"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars"
         android:gravity="center"

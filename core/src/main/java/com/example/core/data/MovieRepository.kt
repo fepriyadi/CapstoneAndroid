@@ -77,7 +77,8 @@ class MovieRepository(
     override fun getTopratedMovies(): Flow<Resource<List<Movie>>> {
         return flow {
             emit(Resource.Loading())
-            val apiResponse: ApiResponse<List<MovieResponse>> = remoteDataSource.getTopratedMovie().first()
+            val apiResponse: ApiResponse<List<MovieResponse>> =
+                remoteDataSource.getTopRatedMovie().first()
             when (apiResponse) {
                 is ApiResponse.Success -> {
                     val data = apiResponse.data

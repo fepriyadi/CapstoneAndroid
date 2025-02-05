@@ -4,6 +4,7 @@
     android:id="@+id/ivPoster"
     android:layout_width="match_parent"
     android:layout_height="@dimen/movie_grid_poster_height"
+    android:contentDescription="@string/movie_image_detail"
     android:scaleType="centerCrop"
     tools:srcCompat="@tools:sample/avatars"
     android:foreground="?attr/selectableItemBackground"

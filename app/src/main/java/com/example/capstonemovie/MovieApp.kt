@@ -7,9 +7,6 @@ import com.example.capstonemovie.di.viewModelModule
 import com.example.core.di.databaseModule
 import com.example.core.di.networkModule
 import com.example.core.di.repositoryModule
-import com.example.core.utils.log
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
-import com.google.android.play.core.splitinstall.SplitInstallRequest
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -20,9 +20,6 @@ data class Movie(
     val posterURl: String
         get(){return "https://image.tmdb.org/t/p/w500${posterPath}"}
 
-    val backdropURl: String
-        get(){return "https://image.tmdb.org/t/p/w500${backdropPath}"}
-
 }
 
 

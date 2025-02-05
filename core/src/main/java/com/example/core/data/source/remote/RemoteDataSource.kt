@@ -1,7 +1,6 @@
 package com.example.core.data.source.remote
 
 import android.util.Log
-import com.example.core.BuildConfig.*
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.network.ApiService
 import com.example.core.data.source.remote.response.MovieDetailResponse
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    suspend fun getNowPlayingMovie(): Flow<ApiResponse<List<MovieResponse>>> {
+    fun getNowPlayingMovie(): Flow<ApiResponse<List<MovieResponse>>> {
         //get data from remote api
         return flow {
             try {
@@ -32,7 +31,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getPopularMovie(): Flow<ApiResponse<List<MovieResponse>>> {
+    fun getPopularMovie(): Flow<ApiResponse<List<MovieResponse>>> {
         //get data from remote api
         return flow {
             try {
@@ -49,7 +48,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getTopratedMovie(): Flow<ApiResponse<List<MovieResponse>>> {
+    fun getTopRatedMovie(): Flow<ApiResponse<List<MovieResponse>>> {
         //get data from remote api
         return flow {
             try {
@@ -66,7 +65,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getMovieDetail(id: Int): Flow<ApiResponse<MovieDetailResponse>> {
+    fun getMovieDetail(id: Int): Flow<ApiResponse<MovieDetailResponse>> {
         //get data from remote api
         return flow {
             try {
@@ -79,7 +78,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun searchMovie(query: String): Flow<ApiResponse<List<MovieResponse>>> {
+    fun searchMovie(query: String): Flow<ApiResponse<List<MovieResponse>>> {
         //get data from remote api
         return flow {
             try {

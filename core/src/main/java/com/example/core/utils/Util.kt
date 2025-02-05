@@ -4,24 +4,8 @@ import android.util.Log
 import com.example.core.BuildConfig
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
-
-fun String.formatDate(): String? {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
-
-    return try {
-        // Parse the input date string to a Date object
-        val date = inputFormat.parse(this)
-        // Format the Date object to the desired output format
-        outputFormat.format(date)
-    } catch (e: ParseException) {
-        // Handle the case where parsing fails
-        "Invalid date"
-    }
-}
 
 fun String.formatYear(): String? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -56,8 +40,6 @@ fun Float.getNumberOfColumns(context: Context): Int {
     return screenWidth.div(this).toInt()
 }
 
-fun Date.format(pattern: String) = SimpleDateFormat(pattern).format(this)
-
 fun Number?.format(pattern: String) = String.format(pattern, this)
 
 fun String.log(msg: String) {
@@ -72,7 +54,3 @@ fun String.logError(msg: String) {
     }
 }
 
-fun dpToPx(context: Context, dp: Int): Int {
-    val density: Float = context.resources.displayMetrics.density
-    return Math.round(dp * density)
-}

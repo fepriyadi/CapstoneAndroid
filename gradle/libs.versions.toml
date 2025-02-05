@@ -8,16 +8,12 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
-activity = "1.8.0"
-constraintlayout = "2.1.4"
 cardview_version = "1.0.0"
 recyclerview_version = "1.1.0"
-material_version = "1.2.1"
 glide_version = "4.11.0"
 epoxy_version = "5.1.3"
 rxJava_version = "2.2.9"
 rxKotlin_version = "2.3.0"
-rxAndroid_version = "2.1.1"
 rxBinding_version = "3.0.0-alpha2"
 rxRelay_version = "2.1.0"
 room_version = "2.5.0"
@@ -32,7 +28,6 @@ koin_version = "3.1.6"
 navigationFragment = "2.7.7"
 leak_version = "2.10"
 multidex_version = "2.0.1"
-coreKtxVersion = "1.10.3"
 featureDeliveryKtx = "2.1.0"
 sqlchiper = "4.4.0"
 sqlite = "2.1.0"
@@ -44,8 +39,6 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room_version" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room_version" }
@@ -66,14 +59,13 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 
 rxJava = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxJava_version" }
 rxKotlin = { group = "io.reactivex.rxjava2", name = "rxkotlin", version.ref = "rxKotlin_version" }
-rxAndroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxAndroid_version" }
 rxBinding = { group = "com.jakewharton.rxbinding3", name = "rxbinding", version.ref = "rxBinding_version" }
 rxRelay = { group = "com.jakewharton.rxrelay2", name = "rxrelay", version.ref = "rxRelay_version" }
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin_version" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin_version" }
 koin-jvm = { group = "io.insert-koin", name = "koin-core-jvm", version.ref = "koin_version" }
-androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragment" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationFragment" }
 
@@ -84,7 +76,6 @@ epoxy-processor = { group = "com.airbnb.android", name = "epoxy-processor", vers
 leak-canary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leak_version" }
 
 multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex_version" }
-core-ktx = { group = "com.google.android.play", name = "core-ktx", version.ref = "coreKtxVersion" }
 feature-delivery-ktx = { group = "com.google.android.play", name = "feature-delivery-ktx", version.ref = "featureDeliveryKtx" }
 sql-chiper = { group = "net.zetetic", name = "android-database-sqlcipher", version.ref = "sqlchiper" }
 sql-lite = { group = "androidx.sqlite", name = "sqlite-ktx", version.ref = "sqlite" }

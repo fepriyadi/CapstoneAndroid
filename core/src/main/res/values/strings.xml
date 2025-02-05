@@ -16,4 +16,6 @@
     <string name="no_data">Empty data</string>
     <string name="something_wrong">Oops.. something went wrong</string>
     <string name="title_favourite">favourite</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="movie_image_detail">Movie Image Detail</string>
 </resources>
